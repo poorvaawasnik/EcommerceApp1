@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | E-Shop</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0e0e0e;
+            color: #fff;
+            height: 100vh;
+        }
+
+        /* ===== Top Navbar ===== */
+        .topbar {
+            height: 60px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            border-bottom: 1px solid #222;
+        }
+
+        .topbar h3 {
+            color: #00e5ff;
+            font-weight: normal;
+        }
+
+        /* ===== Layout ===== */
+        .layout {
+            display: flex;
+            height: calc(100vh - 60px);
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 230px;
+            background: #111;
+            padding-top: 20px;
+            border-right: 1px solid #222;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        /* Sidebar items with custom indicator */
+        .sidebar ul li {
+            position: relative;
+            padding: 15px 25px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #ccc;
+            display: flex;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        /* Circle indicator before each item */
+        .sidebar ul li::before {
+            content: '';
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+            margin-right: 15px;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li:hover::before {
+            background: #00e5ff;
+        }
+
+        .sidebar ul li:hover {
+            background: #1c1c1c;
+            color: #00e5ff;
+        }
+
+        .sidebar ul li:last-child::before {
+            background: #ff5252;
+        }
+
+        .sidebar ul li:last-child:hover::before {
+            background: #ff5252;
+        }
+
+        /* ===== Main Content ===== */
+        .main-container {
+            flex: 1;
+            padding: 30px;
+            background: #0e0e0e;
+        }
+
+        .card {
+            background: #111;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 229, 255, 0.08);
+        }
+
+        .card h2 {
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #bbb;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== Top Navbar ===== -->
+<div class="topbar">
+    <h3>Welcome to Dashboard</h3>
+</div>
+
+<!-- ===== Main Layout ===== -->
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul>
+            <li><a th:href="@{/dashboard}">Home</a></li>
+            <li> <a th:href="@{/dashboard/categoryform}">Category</a> </li>
+            <li><a th:href="@{/dashboard/productform}">Product</a></li>
+            <li><a th:href="@{/dashboard/productlist}">List Product</a></li>
+            <li>Logout</li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <div class="card">
+            <h2>Dashboard Overview</h2>
+            <p>Select an option from the sidebar to manage your store.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

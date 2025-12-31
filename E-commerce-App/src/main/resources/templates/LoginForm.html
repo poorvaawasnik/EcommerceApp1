@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Login | E-Shop</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            height: 100vh;
+            background: #0e0e0e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+        }
+
+        .login-box {
+            background: #111;
+            padding: 40px;
+            width: 350px;
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0, 229, 255, 0.15);
+        }
+
+        .login-box h1 {
+            text-align: center;
+            color: #00e5ff;
+            margin-bottom: 10px;
+        }
+
+        .login-box h2 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 30px;
+            font-weight: normal;
+            color: #ccc;
+        }
+
+        .login-box label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #bbb;
+        }
+
+        .login-box input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            background: #1c1c1c;
+            color: #fff;
+        }
+
+        .login-box input:focus {
+            outline: 1px solid #00e5ff;
+        }
+
+        .login-box input[type="submit"] {
+            background: #00e5ff;
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-box input[type="submit"]:hover {
+            background: #00bcd4;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="login-box">
+    <h1>🛒 Ecommerce App</h1>
+    <h2>Login</h2>
+
+    <form th:action="@{/dologin}" method="post">
+        <label>Username</label>
+        <input type="text" name="username" required>
+
+        <label>Password</label>
+        <input type="password" name="password" required>
+
+        <input type="submit" value="Sign In">
+    </form>
+    <a th:href="@{/signupform}" ><button class="btn">Sign-Up</button></a>
+</div>
+
+</body>
+</html>

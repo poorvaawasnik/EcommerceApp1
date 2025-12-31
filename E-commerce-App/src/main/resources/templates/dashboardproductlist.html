@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Product List | Dashboard</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0e0e0e;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* ===== Topbar ===== */
+        .topbar {
+            height: 60px;
+            background: #111;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            border-bottom: 1px solid #222;
+        }
+
+        .topbar h3 {
+            color: #00e5ff;
+            font-weight: normal;
+        }
+
+        /* ===== Layout ===== */
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 60px);
+        }
+
+        /* ===== Sidebar ===== */
+        .sidebar {
+            width: 230px;
+            background: #111;
+            padding-top: 20px;
+            border-right: 1px solid #222;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li a {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            text-decoration: none;
+            color: #ccc;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar ul li a::before {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #555;
+            margin-right: 15px;
+        }
+
+        .sidebar ul li a:hover {
+            background: #1c1c1c;
+            color: #00e5ff;
+        }
+
+        .sidebar ul li a:hover::before {
+            background: #00e5ff;
+        }
+
+        /* ===== Main Content ===== */
+        .main-container {
+            flex: 1;
+            padding: 30px;
+        }
+
+        h1 {
+            color: #00e5ff;
+            margin-bottom: 20px;
+        }
+
+        /* ===== List Header ===== */
+        .list-header {
+            display: grid;
+            grid-template-columns: 80px 1fr 150px 200px;
+            padding: 12px 15px;
+            background: #111;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            font-size: 14px;
+            color: #00e5ff;
+        }
+
+        /* ===== List Row ===== */
+        .list-row {
+            display: grid;
+            grid-template-columns: 80px 1fr 150px 200px;
+            align-items: center;
+            padding: 12px 15px;
+            background: #111;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            transition: 0.3s;
+        }
+
+        .list-row:hover {
+            background: #1c1c1c;
+        }
+
+        .list-row img {
+            height: 50px;
+            border-radius: 6px;
+            border: 1px solid #222;
+        }
+
+        .list-row span {
+            color: #ccc;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== Topbar ===== -->
+<div class="topbar">
+    <h3>Dashboard → Product List</h3>
+</div>
+
+<div class="layout">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <ul>
+            <li><a th:href="@{/dashboard}">Home</a></li>
+            <li><a th:href="@{/dashboard}">Category</a></li>
+            <li><a th:href="@{/dashboard/productform}">Add Product</a></li>
+            <li><a th:href="@{/dashboard/productlist}">Product List</a></li>
+            <li><a th:href="@{/logout}">Logout</a></li>
+        </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-container">
+
+        <h1>Product List</h1>
+
+        <!-- Header -->
+        <div class="list-header">
+            <div>Image</div>
+            <div>Name</div>
+            <div>Price</div>
+            <div>Category</div>
+        </div>
+
+        <!-- Rows -->
+        <div th:each="item:${productEntityList}" class="list-row">
+            <div>
+                <img th:src="@{'/productimages/'+${item.image}}">
+            </div>
+            <span th:text="${item.name}"></span>
+            <span th:text="${item.price}"></span>
+            <span th:text="${item.category.name}"></span>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

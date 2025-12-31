@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Shop | Products</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(180deg, #0b0b0b, #121212);
+            color: #fff;
+        }
+
+        /* ===== Navbar ===== */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 50px;
+            background: #0f0f0f;
+            border-bottom: 1px solid #222;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00e5ff;
+        }
+
+        .nav {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav li a {
+            color: #bbb;
+            text-decoration: none;
+            font-size: 15px;
+        }
+
+        .nav li a:hover {
+            color: #00e5ff;
+        }
+
+        /* ===== Section ===== */
+        .product-section {
+            padding: 50px;
+        }
+
+        .product-section h2 {
+            color: #00e5ff;
+            font-size: 26px;
+            margin-bottom: 35px;
+        }
+
+        /* ===== Product Grid ===== */
+        .product-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 35px;
+        }
+
+        /* ===== Product Card ===== */
+        .product-card {
+            background: #111;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 229, 255, 0.08);
+            transition: 0.35s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 45px rgba(0, 229, 255, 0.25);
+        }
+
+        /* ===== Image ===== */
+        .image-box {
+            width: 100%;
+            height: 260px;
+            background: #000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.4s ease;
+        }
+
+        .product-card:hover .image-box img {
+            object-fit: contain;
+            transform: scale(1.05);
+        }
+
+        /* ===== Product Info ===== */
+        .product-info {
+            padding: 18px;
+        }
+
+        .product-info h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .product-info p {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 12px;
+        }
+
+        .product-info span {
+            font-size: 18px;
+            color: #00e5ff;
+            font-weight: bold;
+        }
+
+        /* ===== Buttons ===== */
+        .product-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 15px;
+        }
+
+        .product-actions button {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s ease;
+        }
+
+        .btn-cart {
+            background: #222;
+            color: #00e5ff;
+            border: 1px solid #00e5ff;
+        }
+
+        .btn-cart:hover {
+            background: #00e5ff;
+            color: #000;
+        }
+
+        .btn-buy {
+            background: #00e5ff;
+            color: #000;
+            font-weight: bold;
+        }
+
+        .btn-buy:hover {
+            background: #00bcd4;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ===== Navbar ===== -->
+<header class="navbar">
+    <div class="logo">🛒 E-Shop</div>
+    <ul class="nav">
+        <li><a th:href="@{/}">Home</a></li>
+
+        <li th:each="item : ${categoryEntityList}">
+            <a th:href="@{'/product/' + ${item.name}}">
+                <span th:text="${item.name}"></span>
+            </a>
+        </li>
+
+        <li><a th:href="@{/login}">Login</a></li>
+    </ul>
+</header>
+
+<!-- ===== Products ===== -->
+<section class="product-section">
+    <h2 th:text="${category}">Category</h2>
+
+    <div class="product-list">
+        <div th:each="item : ${productEntityList}" class="product-card">
+
+            <div class="image-box">
+                <img th:src="@{'/productimages/' + ${item.image}}">
+            </div>
+
+            <div class="product-info">
+                <h4 th:text="${item.name}"></h4>
+                <p th:text="${item.category.name}"></p>
+                <span th:text="${item.price}"></span>
+
+                <div class="product-actions">
+                    <!-- Add to Cart -->
+                    <form th:action="@{/cart/add/{id}(id=${item.id})}" method="post">
+                        <button type="submit" class="btn-cart">Add to Cart</button>
+                    </form>
+
+                    <!-- Buy Now -->
+                    <form th:action="@{/buy/{id}(id=${item.id})}" method="post">
+                        <button type="submit" class="btn-buy">Buy Now</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
