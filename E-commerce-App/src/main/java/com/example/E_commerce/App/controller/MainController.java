@@ -6,11 +6,14 @@ import com.example.E_commerce.App.entity.User;
 import com.example.E_commerce.App.service.CategoryService;
 import com.example.E_commerce.App.service.ProductService;
 import com.example.E_commerce.App.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.webmvc.autoconfigure.WebMvcProperties;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -47,13 +51,15 @@ public class MainController {
         return "product";
 
     }
-    @RequestMapping("/")
-    public String index(Model model) {
+    @RequestMapping("")
+    public String index(Model model, HttpSession session) {
         List<ProductEntity> productEntityList=productService.getLatestProduct();
         List<CategoryEntity>categoryEntityList=categoryService.getAllCategory();
         model.addAttribute("productEntityList",productEntityList);
         model.addAttribute("categoryEntityList",categoryEntityList);
-
+         String username=(String) session.getAttribute("username");
+         if(username != null)
+             model.addAttribute("username",username);
         return "index";
     }
 
@@ -147,5 +153,19 @@ public class MainController {
         user.setRoles("ROLE_USER");
         userService.saveUser(user);
         return "redirect:/login";
+    }
+
+    @RequestMapping("/checkUserRole")
+    @ResponseBody
+    public String checkUserRole(Authentication auth, HttpSession session) {
+        String Role = (String) auth.getAuthorities().toArray()[0].toString();
+        if (Role.equals("ROLE_ADMIN"))
+            return "redirect:/dashboard";
+        else {
+            User user = (User) auth.getPrincipal();
+            session.setAttribute("userid", user.getId());
+            session.setAttribute("username", user.getName());
+            return "redirect:";
+        }
     }
 }

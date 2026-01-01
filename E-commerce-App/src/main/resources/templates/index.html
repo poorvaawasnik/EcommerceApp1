@@ -164,6 +164,7 @@
         <li th:each="item:${categoryEntityList}" >
             <a th:href="@{'/product/'+${item.name}}">  <span th:text="${item.name}"></span></a>
         </li>
+        <li th:if="${username}"><span th:text="${username}"></span></li>
         <li><a th:href="@{/login}">Login</a></li>
     </ul>
 </header>
@@ -180,6 +181,7 @@
         <div class="slide">
             <img src="https://images.unsplash.com/photo-1518770660439-4636190af475">
         </div>
+
     </div>
 
     <div class="dots">

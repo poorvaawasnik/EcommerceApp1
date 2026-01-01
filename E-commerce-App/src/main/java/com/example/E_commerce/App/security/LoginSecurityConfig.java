@@ -25,7 +25,7 @@ public class LoginSecurityConfig {
                 form
                         .loginPage("/login")
                         .loginProcessingUrl("/doLogin")
-                        .defaultSuccessUrl("/dashboard")
+                        .defaultSuccessUrl("/checkUserRole")
 
                         .failureForwardUrl("/login?error=true")
                         .permitAll()
