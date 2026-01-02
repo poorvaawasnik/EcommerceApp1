@@ -33,6 +33,13 @@ public class LoginSecurityConfig {
 
 
                         )
+                .logout(logout -> logout
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/login?logout")
+                        .invalidateHttpSession(true)
+                        .deleteCookies("JSESSIONID")
+                        .permitAll()
+                )
                 .userDetailsService(userService);
         return http.build();
     }

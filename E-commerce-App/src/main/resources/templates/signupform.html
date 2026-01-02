@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Create User Account</title>
@@ -99,7 +99,7 @@
 
 <body>
 
-<form action="@{/signupsubmit}" method="post" enctype="multipart/form-data">
+<form th:action="@{/signupsubmit}" method="post" enctype="multipart/form-data">
     <h1>Create User Account</h1>
 
     <div>

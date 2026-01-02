@@ -41,13 +41,16 @@ public class MainController {
 
     @RequestMapping("/product/{category}")
 
-    public String productByCategory(@PathVariable("category")String category,Model model){
+    public String productByCategory(@PathVariable("category")String category,Model model,HttpSession session){
         CategoryEntity categoryEntity=categoryService.getCategoryByName(category);
         List<ProductEntity> productEntityList = productService.getProductByCategory(categoryEntity);
         List<CategoryEntity>categoryEntityList=categoryService.getAllCategory();
         model.addAttribute("productEntityList",productEntityList);
         model.addAttribute("category",category);
         model.addAttribute("categoryEntityList",categoryEntityList);
+        String username=(String) session.getAttribute("username");
+        if(username != null)
+            model.addAttribute("username",username);
         return "product";
 
     }
@@ -66,6 +69,13 @@ public class MainController {
     @RequestMapping("/login")
     public String loginForm() {
         return "LoginForm";
+    }
+
+    @RequestMapping("/logout")
+    public String  logout(HttpSession session){
+        session.removeAttribute("userid");
+        session.removeAttribute("username");
+        return "redirect:";
     }
 
     @RequestMapping("/dashboard")
@@ -139,6 +149,7 @@ public class MainController {
     public String signupform(){
         return "signupform";
     }
+
     @RequestMapping("/signupsubmit")
     public String signupsubmit(@RequestParam("name") String name,
                                @RequestParam("email") String email,
