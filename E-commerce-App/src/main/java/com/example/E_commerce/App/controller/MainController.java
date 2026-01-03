@@ -176,7 +176,7 @@ public class MainController {
             User user = (User) auth.getPrincipal();
             session.setAttribute("userid", user.getId());
             session.setAttribute("username", user.getName());
-            return "redirect:";
+            return "redirect:/";
         }
     }
 }
