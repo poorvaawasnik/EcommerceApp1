@@ -155,11 +155,13 @@ public class MainController {
                                @RequestParam("email") String email,
                                @RequestParam("mobile")String mobile,
                                @RequestParam("address") String address,
-                               @RequestParam("name")MultipartFile photo,
+                               @RequestParam("photo")MultipartFile photo,
                                @RequestParam("password")String password) throws Exception{
         String filename= photo.getOriginalFilename();
-        Path path = Paths.get(useruploadpath+filename);
-        Files.write(path,photo.getBytes());
+        Path uploadDir = Paths.get(useruploadpath);
+        Files.createDirectories(uploadDir);   // <-- IMPORTANT
+        Path path = uploadDir.resolve(filename);
+        Files.write(path, photo.getBytes());        Files.write(path,photo.getBytes());
         User user=new User(mobile, "{noop}"+password,name,email,address,filename);
         user.setRoles("ROLE_USER");
         userService.saveUser(user);
@@ -167,7 +169,6 @@ public class MainController {
     }
 
     @RequestMapping("/checkUserRole")
-    @ResponseBody
     public String checkUserRole(Authentication auth, HttpSession session) {
         String Role = (String) auth.getAuthorities().toArray()[0].toString();
         if (Role.equals("ROLE_ADMIN"))
@@ -176,7 +177,7 @@ public class MainController {
             User user = (User) auth.getPrincipal();
             session.setAttribute("userid", user.getId());
             session.setAttribute("username", user.getName());
-            return "redirect:/";
+            return "redirect:";
         }
     }
 }
