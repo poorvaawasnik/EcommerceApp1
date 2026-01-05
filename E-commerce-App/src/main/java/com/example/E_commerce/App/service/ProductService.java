@@ -27,4 +27,7 @@ public class ProductService {
     {
         return repository.findByCategory(category);
     }
+    public ProductEntity getProductById(int id){
+        return repository.findById(id).orElse(null);
+    }
 }

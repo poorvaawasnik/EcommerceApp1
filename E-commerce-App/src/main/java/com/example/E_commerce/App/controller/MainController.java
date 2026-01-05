@@ -180,4 +180,9 @@ public class MainController {
             return "redirect:";
         }
     }
+    @RequestMapping("/addcartitem/{pid}")
+    @ResponseBody
+    public String addCartitem(@PathVariable String pid){
+        return "add Cart item";
+    }
 }

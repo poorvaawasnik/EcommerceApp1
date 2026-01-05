@@ -204,14 +204,14 @@
 
                 <div class="product-actions">
                     <!-- Add to Cart -->
-                    <form th:action="@{/cart/add/{id}(id=${item.id})}" method="post">
-                        <button type="submit" class="btn-cart">Add to Cart</button>
-                    </form>
+                    <a th:href="@{'/addcartitem/' + ${item.id})}" class="btn-cart">
+                        ADD TO CART
+                    </a>
 
                     <!-- Buy Now -->
-                    <form th:action="@{/buy/{id}(id=${item.id})}" method="post">
-                        <button type="submit" class="btn-buy">Buy Now</button>
-                    </form>
+                   <a th:href="@{'/buy/' +${item.id}} " class="btn-buy">
+                       BUY NOW
+                   </a>
                 </div>
             </div>
 
