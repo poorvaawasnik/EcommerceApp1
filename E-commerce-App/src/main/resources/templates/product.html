@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:tth="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>E-Shop | Products</title>
@@ -189,7 +189,7 @@
 <!-- ===== Products ===== -->
 <section class="product-section">
     <h2 th:text="${category}">Category</h2>
-
+     <div th:if="${success}"><span th:text="${success}"></span> </div>
     <div class="product-list">
         <div th:each="item : ${productEntityList}" class="product-card">
 
@@ -204,8 +204,9 @@
 
                 <div class="product-actions">
                     <!-- Add to Cart -->
-                    <a th:href="@{'/addcartitem/' + ${item.id})}" class="btn-cart">
-                        ADD TO CART
+                    <a th:href="@{'/addcartitem/' + ${item.id}}">
+
+                       ADD TO CART
                     </a>
 
                     <!-- Buy Now -->

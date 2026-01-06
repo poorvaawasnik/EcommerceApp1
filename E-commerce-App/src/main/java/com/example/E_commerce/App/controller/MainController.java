@@ -3,9 +3,11 @@ package com.example.E_commerce.App.controller;
 import com.example.E_commerce.App.entity.CategoryEntity;
 import com.example.E_commerce.App.entity.ProductEntity;
 import com.example.E_commerce.App.entity.User;
+import com.example.E_commerce.App.service.CartService;
 import com.example.E_commerce.App.service.CategoryService;
 import com.example.E_commerce.App.service.ProductService;
 import com.example.E_commerce.App.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -37,6 +40,8 @@ public class MainController {
     ProductService productService;
     @Autowired
     UserService userService;
+    @Autowired
+    CartService cartService;
 
 
     @RequestMapping("/product/{category}")
@@ -181,8 +186,13 @@ public class MainController {
         }
     }
     @RequestMapping("/addcartitem/{pid}")
-    @ResponseBody
-    public String addCartitem(@PathVariable String pid){
-        return "add Cart item";
+    public String addCartitem(@PathVariable String pid, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes){
+        int userid=(Integer) session.getAttribute("userid");
+        User user=userService.getUserById(userid);
+        ProductEntity product=productService.getProductById(Integer.parseInt(pid));
+        cartService.addCart(user,product);
+        String referer=request.getHeader("Referer");
+        redirectAttributes.addFlashAttribute("success","Product added to cart");
+        return "redirect:"+referer;
     }
 }
