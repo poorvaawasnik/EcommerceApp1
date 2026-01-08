@@ -1,5 +1,6 @@
 package com.example.E_commerce.App.controller;
 
+import com.example.E_commerce.App.entity.CartEntity;
 import com.example.E_commerce.App.entity.CategoryEntity;
 import com.example.E_commerce.App.entity.ProductEntity;
 import com.example.E_commerce.App.entity.User;
@@ -194,5 +195,14 @@ public class MainController {
         String referer=request.getHeader("Referer");
         redirectAttributes.addFlashAttribute("success","Product added to cart");
         return "redirect:"+referer;
+    }
+
+    @RequestMapping("/viewcart")
+    public String viewcart(Model model,HttpSession session){
+        int userid=(Integer) session.getAttribute("userid");
+        User user=userService.getUserById(userid);
+        List<CartEntity> cartitems=cartService.getCartByuser(user);
+        model.addAttribute("cartitems",cartitems);
+        return "viewcart";
     }
 }

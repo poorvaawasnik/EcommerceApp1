@@ -165,6 +165,7 @@
             <a th:href="@{'/product/'+${item.name}}">  <span th:text="${item.name}"></span></a>
         </li>
         <li th:if="${username}"><span th:text="${username}"></span></li>
+        <a th:href="@{'viewcart'}">Cart</a>
         <li th:if="${username}"><a th:href="@{/logout}">Logout</a></li>
         <li th:unless="${username}"><a th:href="@{/login}">Login</a></li>
     </ul>
