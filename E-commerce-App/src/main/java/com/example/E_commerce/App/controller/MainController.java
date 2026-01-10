@@ -201,7 +201,7 @@ public class MainController {
     public String viewcart(Model model,HttpSession session){
         int userid=(Integer) session.getAttribute("userid");
         User user=userService.getUserById(userid);
-        .....
+        .....;
         List<CartEntity> cartitems=cartService.getCartByuser(user);
         model.addAttribute("cartitems",cartitems);
         return "viewcart";
